@@ -12,8 +12,20 @@ const seedTripsData = [
   {
     id: tripsIds.tripsTwo,
     ownerId: usersIds.userTwo,
-    title: "TestOne",
-    description: "TestOne",
+    title: "TestTwo",
+    description: "TestTwo",
+  },
+  {
+    id: tripsIds.tripsThree,
+    ownerId: usersIds.userOne,
+    title: "TestThree",
+    description: "TestThree",
+  },
+  {
+    id: tripsIds.tripsFour,
+    ownerId: usersIds.userTwo,
+    title: "TestFour",
+    description: "TestFour",
   },
 ];
 
