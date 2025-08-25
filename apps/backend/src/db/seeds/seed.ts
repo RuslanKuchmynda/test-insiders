@@ -6,11 +6,14 @@ import { PgTable } from "drizzle-orm/pg-core";
 import {userSchema} from "@/db/schemas";
 import {seedTrips} from "@/db/seeds/trips-seed";
 import {tripSchema} from "@/db/schemas/trip.schema";
+import {seedPlaces} from "@/db/seeds/places-seed";
+import {placeSchema} from "@/db/schemas/place.schema";
 async function seedData() {
   await clearDatabase();
 
   await seedUsers();
   await seedTrips()
+  await seedPlaces()
 
   console.log("Data seeded successfully!");
 }
@@ -21,6 +24,7 @@ async function clearDatabase() {
 
   await clearTable(userSchema);
   await clearTable(tripSchema);
+  await clearTable(placeSchema)
 
   console.log("Tables cleared and IDs reset!");
 }
