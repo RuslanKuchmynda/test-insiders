@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {AuthModule} from "@/modules/auth/auth.module";
-import {PassportModule} from "@nestjs/passport";
-import {TripsModule} from "@/modules/trips/trips.module";
-import {PlacesModule} from "@/modules/places/places.module";
-import {InviteModule} from "@/modules/invite/invite.module";
+import { AuthModule } from '@/modules/auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
+import { TripsModule } from '@/modules/trips/trips.module';
+import { PlacesModule } from '@/modules/places/places.module';
+import { InviteModule } from '@/modules/invite/invite.module';
 
 @Module({
-  imports: [AuthModule, PassportModule, TripsModule, PlacesModule, InviteModule],
+  imports: [
+    AuthModule,
+    PassportModule,
+    TripsModule,
+    PlacesModule,
+    InviteModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

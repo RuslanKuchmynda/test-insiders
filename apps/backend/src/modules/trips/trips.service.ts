@@ -1,11 +1,16 @@
-import { db } from "@/db/db";
-import {BadRequestException, ForbiddenException, Injectable, NotFoundException} from "@nestjs/common";
-import {eq, or} from "drizzle-orm";
-import {tripSchema} from "@/db/schemas/trip.schema";
-import {tripCollaboratorsSchema} from "@/db/schemas/trip-collaborator.schema";
-import {CreateTripDto} from "@/modules/trips/dto/create-trip.dto";
-import {v4 as uuidv4} from "uuid";
-import {placeSchema} from "@/db/schemas/place.schema";
+import { db } from '@/db/db';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { eq, or } from 'drizzle-orm';
+import { tripSchema } from '@/db/schemas/trip.schema';
+import { tripCollaboratorsSchema } from '@/db/schemas/trip-collaborator.schema';
+import { CreateTripDto } from '@/modules/trips/dto/create-trip.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { placeSchema } from '@/db/schemas/place.schema';
 
 @Injectable()
 export class TripsService {
@@ -15,21 +20,24 @@ export class TripsService {
       .from(tripSchema)
       .leftJoin(
         tripCollaboratorsSchema,
-        eq(tripSchema.id, tripCollaboratorsSchema.tripId)
+        eq(tripSchema.id, tripCollaboratorsSchema.tripId),
       )
       .where(
         or(
           eq(tripSchema.ownerId, userId),
-          eq(tripCollaboratorsSchema.userId, userId)
-        )
+          eq(tripCollaboratorsSchema.userId, userId),
+        ),
       );
 
     return trips;
   }
 
   async createTrip(userId: string, dto: CreateTripDto) {
-
-    if (dto.startDate && dto.endDate && new Date(dto.startDate) > new Date(dto.endDate)) {
+    if (
+      dto.startDate &&
+      dto.endDate &&
+      new Date(dto.startDate) > new Date(dto.endDate)
+    ) {
       throw new BadRequestException('Start date cannot be after end date');
     }
 
@@ -61,7 +69,9 @@ export class TripsService {
     }
 
     if (trip.ownerId !== userId) {
-      throw new ForbiddenException('You do not have permission to delete this trip');
+      throw new ForbiddenException(
+        'You do not have permission to delete this trip',
+      );
     }
 
     await db.delete(tripSchema).where(eq(tripSchema.id, tripId));
@@ -82,7 +92,9 @@ export class TripsService {
     }
 
     if (trip.ownerId !== userId) {
-      throw new ForbiddenException('You do not have permission to view this trip');
+      throw new ForbiddenException(
+        'You do not have permission to view this trip',
+      );
     }
 
     const places = await db

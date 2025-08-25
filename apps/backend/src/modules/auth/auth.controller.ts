@@ -1,8 +1,8 @@
-import {Controller, Post, Body, Get, Query} from "@nestjs/common";
-import { AuthService } from "@/modules/auth/auth.service";
-import { SignInDto } from "@/modules/auth/dto/sign-in.dto";
-import { routes } from "@/common/routes";
-import { SignUpDto } from "@/modules/auth/dto/sign-up.dto";
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { AuthService } from '@/modules/auth/auth.service';
+import { SignInDto } from '@/modules/auth/dto/sign-in.dto';
+import { routes } from '@/common/routes';
+import { SignUpDto } from '@/modules/auth/dto/sign-up.dto';
 
 @Controller()
 export class AuthController {

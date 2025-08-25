@@ -1,5 +1,5 @@
 export const routes = {
-  api: "api",
-  signIn: "login",
-  signUp: "register",
+  api: 'api',
+  signIn: 'login',
+  signUp: 'register',
 };
