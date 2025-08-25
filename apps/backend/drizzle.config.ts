@@ -1,10 +1,10 @@
-import { config } from "dotenv";
+import { config } from 'dotenv';
 config();
 
 export default {
-  schema: "./src/db/schemas",
-  out: "./migrations",
-  dialect: "postgresql",
+  schema: './src/db/schemas',
+  out: './migrations',
+  dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },

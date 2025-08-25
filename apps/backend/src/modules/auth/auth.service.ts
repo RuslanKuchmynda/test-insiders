@@ -149,4 +149,40 @@ export class AuthService {
 
     return { message: 'Password reset email sent' };
   }
+
+  async resetPassword(
+    token: string,
+    newPassword: string,
+    repeatPassword: string,
+  ) {
+    if (newPassword !== repeatPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    const [user] = await db
+      .select()
+      .from(userSchema)
+      .where(eq(userSchema.passwordResetToken, token));
+
+    if (!user) {
+      throw new BadRequestException('Invalid or expired token');
+    }
+
+    if (!user.passwordResetExpires || user.passwordResetExpires < new Date()) {
+      throw new BadRequestException('Token expired');
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    await db
+      .update(userSchema)
+      .set({
+        password: hashedPassword,
+        passwordResetToken: null,
+        passwordResetExpires: null,
+      })
+      .where(eq(userSchema.id, user.id));
+
+    return { message: 'Password has been reset successfully' };
+  }
 }
