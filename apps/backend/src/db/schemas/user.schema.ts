@@ -1,8 +1,9 @@
-import { pgEnum, text } from "drizzle-orm/pg-core/columns";
+import { text } from "drizzle-orm/pg-core/columns";
 import { pgTable } from "drizzle-orm/pg-core/table";
 import { schemas } from "@/db/schema-constants";
+import {rolesEnum} from "@/db/schemas/enums";
 
-export const rolesEnum = pgEnum("roles", ["user", "admin"]);
+
 
 export const userSchema = pgTable(schemas.user, {
   id: text("id").primaryKey(),

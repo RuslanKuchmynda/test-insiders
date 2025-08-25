@@ -1,19 +1,19 @@
 import { db } from "@/db/db";
 import { hashPassword } from "@/common/bcrypt.funcs";
 import { userSchema } from "@/db/schemas";
-import { usersIds } from "@/constants/users-ids";
+import { usersIds } from "@/constants/test-ids";
 
 const seedUsersData = [
   {
-    id: usersIds.admin,
+    id: usersIds.userOne,
     email: "admin@example.com",
     firstName: "Admin",
     lastName: "Admin",
     password: "Admin1!",
-    role: "admin" as const,
+    role: "user" as const,
   },
   {
-    id: usersIds.dev,
+    id: usersIds.userTwo,
     email: "john.doe@example.com",
     firstName: "John",
     lastName: "Doe",
@@ -32,5 +32,5 @@ export async function seedUsers() {
 
   await db.insert(userSchema).values(userData);
 
-  console.log("Users seeded!");
+  console.log("Trips seeded!");
 }
