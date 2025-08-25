@@ -1,0 +1,1 @@
+ALTER TABLE "tripInvite" ADD COLUMN "canceled" timestamp;

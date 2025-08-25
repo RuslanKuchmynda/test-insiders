@@ -15,6 +15,27 @@
       "when": 1756113861020,
       "tag": "0001_public_siren",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756127649334,
+      "tag": "0002_goofy_blur",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1756129823180,
+      "tag": "0003_aspiring_the_fallen",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756129961115,
+      "tag": "0004_spotty_aqueduct",
+      "breakpoints": true
     }
   ]
 }

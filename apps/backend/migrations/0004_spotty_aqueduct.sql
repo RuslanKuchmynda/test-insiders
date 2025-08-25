@@ -1,0 +1,1 @@
+ALTER TABLE "tripInvite" ALTER COLUMN "canceled" SET DATA TYPE boolean;

@@ -3,6 +3,7 @@ const schemas = {
   trip: "trip",
   place: "place",
   tripCollaborator: "tripCollaborator",
+  tripInvite: "tripInvite",
 };
 
 export { schemas };
