@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import {AuthModule} from "@/modules/auth/auth.module";
 import {PassportModule} from "@nestjs/passport";
 import {TripsModule} from "@/modules/trips/trips.module";
+import {PlacesModule} from "@/modules/places/places.module";
 
 @Module({
-  imports: [AuthModule, PassportModule, TripsModule],
+  imports: [AuthModule, PassportModule, TripsModule, PlacesModule],
   controllers: [AppController],
   providers: [AppService],
 })
