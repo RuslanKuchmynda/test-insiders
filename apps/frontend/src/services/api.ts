@@ -8,7 +8,6 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
-    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -16,7 +15,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 api.interceptors.response.use(
@@ -27,7 +26,7 @@ api.interceptors.response.use(
   (error) => {
     log.error(`Response Error: ${error.message}`);
     return Promise.reject(error);
-  }
+  },
 );
 
 const handleApiError = (error: unknown): string => {
@@ -52,6 +51,18 @@ export const apiPost = async <T, R>(route: string, data: T): Promise<R> => {
   try {
     const response = await api.post<{ data: R }>(route, data);
     return response.data.data;
+  } catch (error) {
+    const errorMessage = handleApiError(error);
+    log.error(`Failed to send data to ${route}: ${errorMessage}`);
+    throw new Error("Failed to send data");
+  }
+};
+
+// Some endpoints return the payload directly without a { data } wrapper
+export const apiPostRaw = async <T, R>(route: string, data: T): Promise<R> => {
+  try {
+    const response = await api.post<R>(route, data);
+    return response.data;
   } catch (error) {
     const errorMessage = handleApiError(error);
     log.error(`Failed to send data to ${route}: ${errorMessage}`);

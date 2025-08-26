@@ -8,4 +8,5 @@ export const apiRoutes = {
   signIn: "/login",
   signUp: "/register",
   trips: "/trips",
+  shareTrip: "/invites/create",
 };

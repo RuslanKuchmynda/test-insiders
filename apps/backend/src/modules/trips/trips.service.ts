@@ -11,6 +11,7 @@ import { tripCollaboratorsSchema } from '@/db/schemas/trip-collaborator.schema';
 import { CreateTripDto } from '@/modules/trips/dto/create-trip.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { placeSchema } from '@/db/schemas/place.schema';
+import { UpdateTripDto } from '@/modules/trips/dto/update-trip.dto';
 
 @Injectable()
 export class TripsService {
@@ -107,5 +108,44 @@ export class TripsService {
       trip,
       places,
     };
+  }
+
+  async updateTrip(userId: string, tripId: string, dto: UpdateTripDto) {
+    const trips = await db
+      .select()
+      .from(tripSchema)
+      .where(eq(tripSchema.id, tripId));
+
+    const trip = trips[0];
+    if (!trip) {
+      throw new NotFoundException('Trip not found');
+    }
+
+    if (trip.ownerId !== userId) {
+      throw new ForbiddenException(
+        'You do not have permission to update this trip',
+      );
+    }
+
+    if (
+      dto.startDate &&
+      dto.endDate &&
+      new Date(dto.startDate) > new Date(dto.endDate)
+    ) {
+      throw new BadRequestException('Start date cannot be after end date');
+    }
+
+    const [updated] = await db
+      .update(tripSchema)
+      .set({
+        title: dto.title ?? trip.title,
+        description: dto.description ?? trip.description,
+        startDate: dto.startDate ? new Date(dto.startDate) : trip.startDate,
+        endDate: dto.endDate ? new Date(dto.endDate) : trip.endDate,
+      })
+      .where(eq(tripSchema.id, tripId))
+      .returning();
+
+    return updated;
   }
 }

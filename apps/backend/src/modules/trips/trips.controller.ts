@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Param,
   Post,
   Req,
@@ -12,6 +13,7 @@ import { JwtAuthGuard } from '@/modules/auth/jwt-auth.guard';
 import { Request } from 'express';
 import { TripsService } from '@/modules/trips/trips.service';
 import { CreateTripDto } from '@/modules/trips/dto/create-trip.dto';
+import { UpdateTripDto } from '@/modules/trips/dto/update-trip.dto';
 
 @Controller('trips')
 export class TripsController {
@@ -48,5 +50,15 @@ export class TripsController {
     @Req() req: { user: { id: string } },
   ) {
     return this.tripsService.deleteTrip(req.user.id, tripId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  async updateTrip(
+    @Param('id') tripId: string,
+    @Req() req: { user: { id: string } },
+    @Body() body: UpdateTripDto,
+  ) {
+    return this.tripsService.updateTrip(req.user.id, tripId, body);
   }
 }

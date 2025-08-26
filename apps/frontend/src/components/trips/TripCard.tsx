@@ -6,7 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import {Link} from "react-router";
+import { Link } from "react-router";
+import ShareTripModal from "@/components/modal/ShareTripModal.tsx";
 
 type TripCardProps = {
   id: string;
@@ -16,6 +17,7 @@ type TripCardProps = {
   endDate?: string;
   imageUrl?: string;
   onOpen?: () => void;
+  isOwner?: boolean;
 };
 
 export default function TripCard({
@@ -25,8 +27,8 @@ export default function TripCard({
   startDate,
   endDate,
   imageUrl,
+  isOwner,
 }: TripCardProps) {
-
   return (
     <Card className="overflow-hidden w-full max-w-sm">
       <div className="relative aspect-[4/3] w-full overflow-hidden">
@@ -53,7 +55,9 @@ export default function TripCard({
         <CardTitle className="text-base">{title}</CardTitle>
         <CardDescription className="flex items-center gap-2 text-xs">
           {startDate && endDate && (
-            <span>{startDate} - {endDate}</span>
+            <span>
+              {startDate} - {endDate}
+            </span>
           )}
         </CardDescription>
         {description && (
@@ -65,9 +69,7 @@ export default function TripCard({
 
       <CardFooter className="justify-end">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            Share
-          </Button>
+          {isOwner && <ShareTripModal tripId={id} />}
           <Link to={`/trips/${id}`}>
             <Button size="sm">View</Button>
           </Link>
