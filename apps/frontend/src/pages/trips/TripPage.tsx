@@ -44,13 +44,17 @@ export default function TripPage() {
         atob(base64)
           .split("")
           .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join(""),
+          .join("")
       );
       return (JSON.parse(jsonPayload) as { id?: string }).id ?? null;
     } catch {
       return null;
     }
   }, [token]);
+  const isOwner = useMemo(
+    () => !!trip && currentUserId === trip.ownerId,
+    [trip, currentUserId]
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +71,7 @@ export default function TripPage() {
             notes: p.notes,
             dayNumber: p.dayNumber,
             isEditing: false,
-          })),
+          }))
         );
       } catch (e) {
         setError("Failed to load trip");
@@ -152,14 +156,17 @@ export default function TripPage() {
             <Button variant="outline" onClick={() => navigate("/trips")}>
               Back
             </Button>
-            <EditTripModal
-              trip={trip}
-              disabled={trip.ownerId !== currentUserId}
-              onUpdated={(updated) => setTrip(updated)}
-            />
-            <Button variant="destructive" onClick={handleDeleteTrip}>
-              Delete Trip
-            </Button>
+            {isOwner && (
+              <EditTripModal
+                trip={trip}
+                onUpdated={(updated) => setTrip(updated)}
+              />
+            )}
+            {isOwner && (
+              <Button variant="destructive" onClick={handleDeleteTrip}>
+                Delete Trip
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -183,8 +190,8 @@ export default function TripPage() {
                     notes: updated.notes,
                     dayNumber: updated.dayNumber,
                   }
-                : p,
-            ),
+                : p
+            )
           );
         }}
       />

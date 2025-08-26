@@ -5,7 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { eq, or } from 'drizzle-orm';
+import {and, eq, or} from 'drizzle-orm';
 import { tripSchema } from '@/db/schemas/trip.schema';
 import { tripCollaboratorsSchema } from '@/db/schemas/trip-collaborator.schema';
 import { CreateTripDto } from '@/modules/trips/dto/create-trip.dto';
@@ -93,9 +93,21 @@ export class TripsService {
     }
 
     if (trip.ownerId !== userId) {
-      throw new ForbiddenException(
-        'You do not have permission to view this trip',
-      );
+      const collaborators = await db
+        .select()
+        .from(tripCollaboratorsSchema)
+        .where(
+          and(
+            eq(tripCollaboratorsSchema.tripId, tripId),
+            eq(tripCollaboratorsSchema.userId, userId),
+          ),
+        );
+
+      if (collaborators.length === 0) {
+        throw new ForbiddenException(
+          'You do not have permission to view this trip',
+        );
+      }
     }
 
     const places = await db
