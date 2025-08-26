@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { useEffect } from "react";
 import { localStorageConstants } from "@/constants/local-storage";
 
 interface AuthStore {
@@ -36,14 +35,3 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 }));
 
-export const useAuthInit = () => {
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedToken = localStorage.getItem(
-        localStorageConstants.accessToken,
-      );
-      if (storedToken) setAccessToken(storedToken);
-    }
-  }, [setAccessToken]);
-};

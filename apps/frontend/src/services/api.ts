@@ -58,7 +58,6 @@ export const apiPost = async <T, R>(route: string, data: T): Promise<R> => {
   }
 };
 
-// Some endpoints return the payload directly without a { data } wrapper
 export const apiPostRaw = async <T, R>(route: string, data: T): Promise<R> => {
   try {
     const response = await api.post<R>(route, data);

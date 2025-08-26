@@ -24,10 +24,10 @@ export class InviteController {
     return this.inviteService.createInvite(req.user.id, tripId, email);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('accept')
-  async acceptInvite(@Query('token') token: string) {
-    const testUserId = 'test-user-id';
-    return this.inviteService.acceptInvite(testUserId, token);
+  async acceptInvite(@Query('token') token: string, @Req() req: { user: { id: string } },) {
+    return this.inviteService.acceptInvite(req.user.id, token);
   }
   @Get('cancel')
   async cancelInvite(@Query('token') token: string) {

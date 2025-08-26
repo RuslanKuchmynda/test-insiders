@@ -64,7 +64,7 @@ export class InviteService {
     await this.mailer.sendMail({
       to: email,
       subject: `Invitation to collaborate on trip`,
-      text: `You have been invited. Accept here: ${process.env.APP_URL}/api/invites/accept?token=${token}`,
+      text: `You have been invited. Accept here: http://localhost:5173/invites/accept?token=${token}`,
     });
 
     return invite;

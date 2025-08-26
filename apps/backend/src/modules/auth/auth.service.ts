@@ -41,7 +41,7 @@ export class AuthService {
     await this.mailer.sendMail({
       to: user.email,
       subject: 'Verify your email',
-      text: `Click to verify: ${process.env.APP_URL}/auth/verify-email?token=${token}`,
+      text: `Click to verify: http://localhost:5173/auth/verify-email?token=${token}`,
     });
 
     return { message: 'Verification email sent' };
@@ -104,7 +104,7 @@ export class AuthService {
 
     const token = this.generateToken(newUser);
 
-    return { message: 'Registered and logged in successfully', token };
+    return { message: 'Registered and logged in successfully', data: { ...token } };
   }
 
   async verifyEmail(token: string) {
@@ -144,7 +144,7 @@ export class AuthService {
     await this.mailer.sendMail({
       to: email,
       subject: 'Reset your password',
-      text: `Reset your password: ${process.env.APP_URL}/auth/reset-password?token=${token}`,
+      text: `Reset your password: http://localhost:5173/auth/reset-password?token=${token}`,
     });
 
     return { message: 'Password reset email sent' };

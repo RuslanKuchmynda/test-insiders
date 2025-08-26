@@ -53,7 +53,7 @@ export default function LoginForm() {
               placeholder="john.d@example.com"
               type="email"
               error={errors.email}
-              value={"john.doe@example.com"}
+              // value={"john.doe@example.com"}
               {...register("email", {
                 required: true,
                 pattern: {
@@ -69,7 +69,7 @@ export default function LoginForm() {
               placeholder="Password"
               type="password"
               error={errors.password}
-              value={"John1!"}
+              // value={"John1!"}
               {...register("password", { required: true, minLength: 6 })}
             />
           </div>
